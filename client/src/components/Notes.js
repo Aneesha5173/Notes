@@ -10,9 +10,7 @@ import {
   ModalHeader,
   ModalFooter,
   Table,
-  Alert,
-  Pagination,
-  PaginationItem
+  Alert
 } from "reactstrap";
 import axios from "axios";
 
@@ -26,7 +24,9 @@ class Notes extends Component {
     _id: "",
     email: "",
     data: [],
-    search: ""
+    search: "",
+    currentPage: 1,
+    notesPerPage: 3
   };
 
   componentWillMount() {
@@ -41,6 +41,13 @@ class Notes extends Component {
       });
     });
   }
+
+  //click event for page numbers
+  pageHandler = e => {
+    this.setState({
+      currentPage: Number(e.target.id)
+    });
+  };
 
   //add note toogle
   toggle = () => {
@@ -95,7 +102,7 @@ class Notes extends Component {
           this.setState({
             items: res.data
           });
-          console.log(this.state.items);
+          // console.log(this.state.items);
           this.toggle();
         })
         .catch(err => {});
@@ -175,6 +182,56 @@ class Notes extends Component {
   };
 
   render() {
+    const { items, currentPage, notesPerPage } = this.state;
+
+    //logic for displaying the notes
+    const indexOfLastNote = currentPage * notesPerPage;
+    const indexOfFirstNote = indexOfLastNote - notesPerPage;
+    const currentItems = items.slice(indexOfFirstNote, indexOfLastNote);
+
+    const renderNotes = currentItems.map(ele => {
+      return (
+        <tr key={ele._id}>
+          <td>
+            <Button
+              color="warning"
+              onClick={() => this.toggle1(ele._id, ele.title, ele.content)}
+            >
+              <i className="fa fa-pencil" aria-hidden="true" />
+            </Button>
+            &nbsp;&nbsp;&nbsp;
+            <Button
+              color="danger"
+              onClick={() => {
+                this.setState(
+                  state => ({
+                    items: state.items.filter(item => item._id !== ele._id)
+                  }),
+                  this.deleteHandler(ele._id)
+                );
+              }}
+            >
+              <i className="fa fa-trash-o" aria-hidden="true" />
+            </Button>
+          </td>
+          <td>{ele.title}</td>
+          <td>{ele.content}</td>
+          <td>{ele.date}</td>
+          <td>{ele.updatedDate}</td>
+        </tr>
+      );
+    });
+    const pageNumber = [];
+    for (let i = 1; i <= Math.ceil(items.length / notesPerPage); i++) {
+      pageNumber.push(i);
+    }
+    const renderPageNumber = pageNumber.map(number => {
+      return (
+        <li key={number} id={number} onClick={this.pageHandler}>
+          {number}
+        </li>
+      );
+    });
     return (
       <div>
         <Container>
@@ -246,53 +303,23 @@ class Notes extends Component {
           </InputGroup>
         </Container>
         {this.state.msg ? <Alert color="warning">{this.state.msg}</Alert> : ""}
-        <Table bordered hover striped>
-          <thead>
-            <tr>
-              <th />
-              <th>Title</th>
-              <th>Content</th>
-              <th>Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.items.map(ele => {
-              return (
-                <tr key={ele._id}>
-                  <td>
-                    <Button
-                      color="warning"
-                      onClick={() =>
-                        this.toggle1(ele._id, ele.title, ele.content)
-                      }
-                    >
-                      <i className="fa fa-pencil" aria-hidden="true" />
-                    </Button>
-                    &nbsp;&nbsp;&nbsp;
-                    <Button
-                      color="danger"
-                      onClick={() => {
-                        this.setState(
-                          state => ({
-                            items: state.items.filter(
-                              item => item._id !== ele._id
-                            )
-                          }),
-                          this.deleteHandler(ele._id)
-                        );
-                      }}
-                    >
-                      <i className="fa fa-trash-o" aria-hidden="true" />
-                    </Button>
-                  </td>
-                  <td>{ele.title}</td>
-                  <td>{ele.content}</td>
-                  <td>{ele.date}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
+        {this.state.items.length !== 0 ? (
+          <Table bordered hover striped>
+            <thead>
+              <tr>
+                <th />
+                <th>Title</th>
+                <th>Content</th>
+                <th>Created Date</th>
+                <th>Updated Date</th>
+              </tr>
+            </thead>
+            <tbody>{renderNotes}</tbody>
+          </Table>
+        ) : (
+          ""
+        )}
+        <ul id="page-numbers">{renderPageNumber}</ul>
         {/* new toggel model for edit */}
         <Modal isOpen={this.state.modal1} fade={false} toggle={this.toggle1}>
           <ModalHeader toggle={this.toggle1}>Update Note</ModalHeader>
@@ -349,3 +376,39 @@ export default Notes;
 //   ],
 //   msg: ""
 // }));
+
+// {this.state.items.map(ele => {
+//   return (
+//     <tr key={ele._id}>
+//       <td>
+//         <Button
+//           color="warning"
+//           onClick={() =>
+//             this.toggle1(ele._id, ele.title, ele.content)
+//           }
+//         >
+//           <i className="fa fa-pencil" aria-hidden="true" />
+//         </Button>
+//         &nbsp;&nbsp;&nbsp;
+//         <Button
+//           color="danger"
+//           onClick={() => {
+//             this.setState(
+//               state => ({
+//                 items: state.items.filter(
+//                   item => item._id !== ele._id
+//                 )
+//               }),
+//               this.deleteHandler(ele._id)
+//             );
+//           }}
+//         >
+//           <i className="fa fa-trash-o" aria-hidden="true" />
+//         </Button>
+//       </td>
+//       <td>{ele.title}</td>
+//       <td>{ele.content}</td>
+//       <td>{ele.date}</td>
+//     </tr>
+//   );
+// })}

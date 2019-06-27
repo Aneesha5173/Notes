@@ -17,6 +17,9 @@ const ItemSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  updatedDate: {
+    type: Date
   }
 });
 

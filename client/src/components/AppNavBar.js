@@ -7,7 +7,8 @@ import {
   Navbar,
   NavbarToggler,
   NavbarBrand,
-  Container
+  Container,
+  Nav
 } from "reactstrap";
 
 class AppNavBar extends Component {
@@ -39,17 +40,6 @@ class AppNavBar extends Component {
     this.props.history.push("/");
   };
   render() {
-    const styles = {
-      right: 140,
-      left: "auto",
-      position: "fixed"
-    };
-    const styles1 = {
-      right: 10,
-      left: "auto",
-      position: "fixed"
-    };
-
     let result;
     if (this.state.profile) {
       result = (
@@ -61,12 +51,14 @@ class AppNavBar extends Component {
               </NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
-                <NavbarBrand href="#" style={styles}>
-                  <i className="fa fa-user"> Welcome {this.state.profile}</i>
-                </NavbarBrand>
-                <NavbarBrand href="#" onClick={this.Logout} style={styles1}>
-                  <i className="fa fa-sign-out">Logout</i>
-                </NavbarBrand>
+                <Nav className="ml-auto" navbar>
+                  <NavbarBrand href="#">
+                    <i className="fa fa-user"> Welcome {this.state.profile}</i>
+                  </NavbarBrand>
+                  <NavbarBrand href="#" onClick={this.Logout}>
+                    <i className="fa fa-sign-out">Logout</i>
+                  </NavbarBrand>
+                </Nav>
               </Collapse>
             </Container>
           </Navbar>

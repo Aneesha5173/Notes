@@ -81,7 +81,8 @@ app.get("/getnote/:email", (req, res) => {
 app.post("/updatedata", (req, res) => {
   const doc = {
     title: req.body[1],
-    source: req.body[2]
+    content: req.body[2],
+    updatedDate: Date.now()
   };
   Item.updateOne({ _id: req.body[0] }, doc, function(err, raw) {
     if (err) {
