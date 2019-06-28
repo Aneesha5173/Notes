@@ -20,13 +20,7 @@ class AppNavBar extends Component {
     };
     // console.log("from state");
   }
-  componentWillMount() {
-    // console.log("from render");
-    let user = JSON.parse(localStorage.getItem("user"));
-    this.setState({
-      profile: user.name
-    });
-  }
+
   //toogle function
   toggle = () => {
     this.setState({
@@ -40,8 +34,10 @@ class AppNavBar extends Component {
     this.props.history.push("/");
   };
   render() {
+    let user = JSON.parse(localStorage.getItem("user"));
+
     let result;
-    if (this.state.profile) {
+    if (user) {
       result = (
         <div>
           <Navbar color="dark" dark expand="sm" className="mb-5">
@@ -53,7 +49,7 @@ class AppNavBar extends Component {
               <Collapse isOpen={this.state.isOpen} navbar>
                 <Nav className="ml-auto" navbar>
                   <NavbarBrand href="#">
-                    <i className="fa fa-user"> Welcome {this.state.profile}</i>
+                    <i className="fa fa-user"> Welcome {user.user.name}</i>
                   </NavbarBrand>
                   <NavbarBrand href="#" onClick={this.Logout}>
                     <i className="fa fa-sign-out">Logout</i>

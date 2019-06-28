@@ -18,11 +18,11 @@ class Notes extends Component {
   state = {
     modal: false,
     modal1: false,
+    email: "",
     title: "",
     content: "",
     items: [],
     _id: "",
-    email: "",
     data: [],
     search: "",
     currentPage: 1,
@@ -32,10 +32,10 @@ class Notes extends Component {
   componentWillMount() {
     let user = JSON.parse(localStorage.getItem("user"));
     this.setState({
-      email: user.email
+      email: user.user.email
     });
-    console.log(user.email);
-    axios.get(`/getnote/${user.email}`).then(res => {
+
+    axios.get(`/getnote/${user.user.email}`).then(res => {
       this.setState({
         items: res.data
       });
@@ -102,7 +102,6 @@ class Notes extends Component {
           this.setState({
             items: res.data
           });
-          // console.log(this.state.items);
           this.toggle();
         })
         .catch(err => {});
@@ -130,7 +129,8 @@ class Notes extends Component {
             .post(`/updatedata`, [
               this.state._id,
               this.state.title,
-              this.state.content
+              this.state.content,
+              this.state.email
             ])
             .then(res => {
               console.log(res);
@@ -227,7 +227,7 @@ class Notes extends Component {
     }
     const renderPageNumber = pageNumber.map(number => {
       return (
-        <li key={number} id={number} onClick={this.pageHandler}>
+        <li key={number} id={number} onClick={this.pageHandler} style={{}}>
           {number}
         </li>
       );

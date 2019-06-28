@@ -14,14 +14,7 @@ class RegisterPage extends Component {
     Auth: "",
     profile: ""
   };
-  componentDidMount() {
-    let user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      this.setState({
-        profile: user.name
-      });
-    }
-  }
+
   fieldHandler = e => {
     let target = e.target;
     let value = target.type === "checkbox" ? target.checked : target.value;
@@ -123,6 +116,7 @@ class RegisterPage extends Component {
       axios
         .post("/register", this.state)
         .then(res => {
+          console.log("hello aneesha", res);
           if (res.data.msg === "email already exists") {
             this.setState({
               msg: "email already exists"
@@ -142,7 +136,8 @@ class RegisterPage extends Component {
   };
 
   render() {
-    if (!this.state.profile) {
+    let user = JSON.parse(localStorage.getItem("user"));
+    if (!user) {
       return (
         <div className="class1">
           <div className="class2">
@@ -195,7 +190,11 @@ class RegisterPage extends Component {
                 Submit
               </button>
               <br />
-              <a href="/" className="btn btn-link">
+              <a
+                href="/"
+                className="btn btn-link"
+                style={{ color: "honeydew" }}
+              >
                 Already a Member
               </a>
             </form>

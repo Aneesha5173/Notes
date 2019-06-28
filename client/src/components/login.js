@@ -9,18 +9,11 @@ class LoginPage extends Component {
     msg: "",
     profile: ""
   };
-  componentDidMount() {
-    let user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
-      this.setState({
-        profile: user.name
-      });
-    }
-  }
 
   //submit button
   submitHandler = () => {
     axios.post("/login", this.state).then(res => {
+      console.log("hhhh", res);
       if (res.data.msg === "User Does not exists") {
         this.setState({
           msg: "User Does not exists"
@@ -55,7 +48,9 @@ class LoginPage extends Component {
   };
 
   render() {
-    if (!this.state.profile) {
+    const data = JSON.parse(localStorage.getItem("user"));
+
+    if (!data) {
       return (
         <div className="class1">
           <div className="class2">
@@ -91,8 +86,12 @@ class LoginPage extends Component {
                 Submit
               </button>
               <br />
-              <a className="btn btn-link" href="/register">
-                create a new Account
+              <a
+                className="btn btn-link"
+                href="/register"
+                style={{ color: "honeydew" }}
+              >
+                create a New Account
               </a>
             </form>
           </div>
