@@ -97,7 +97,7 @@ class RegisterPage extends Component {
         msg: "Please enter Password",
         Auth: false
       });
-    } else if (!pattern.test(password)) {
+    } else if (!password.match(pattern)) {
       this.setState({
         msg: "Password length minimum 8",
         Auth: false
@@ -182,7 +182,7 @@ class RegisterPage extends Component {
                 value={this.state.password}
                 placeholder="Enter Password"
                 onChange={this.fieldHandler}
-                onBlur={this.passwordHandler}
+                onBlur={this.passwordValidation}
               />
               <br />
               <br />

@@ -21,6 +21,13 @@ const UserSchema = new Schema({
   date: {
     type: Date,
     default: Date.now
+  },
+  token: {
+    type: String
+  },
+  isuser: {
+    type: Boolean,
+    default: false
   }
 });
 

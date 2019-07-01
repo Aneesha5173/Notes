@@ -149,7 +149,7 @@ class Notes extends Component {
   searchHandler = () => {
     const searchItem = this.state.search;
     const user = JSON.parse(localStorage.getItem("user"));
-    const email = user.email;
+    const email = user.user.email;
     console.log(searchItem);
     axios
       .post(`/searchnote`, [searchItem, email])
@@ -227,7 +227,7 @@ class Notes extends Component {
     }
     const renderPageNumber = pageNumber.map(number => {
       return (
-        <li key={number} id={number} onClick={this.pageHandler} style={{}}>
+        <li key={number} id={number} onClick={this.pageHandler}>
           {number}
         </li>
       );

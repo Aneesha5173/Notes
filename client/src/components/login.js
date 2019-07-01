@@ -26,6 +26,10 @@ class LoginPage extends Component {
         this.setState({
           msg: "please enter all fields"
         });
+      } else if (res.data.msg === "Please Verify your email") {
+        this.setState({
+          msg: "Please Verify your email"
+        });
       } else {
         this.setState({
           msg: ""
@@ -85,6 +89,15 @@ class LoginPage extends Component {
               >
                 Submit
               </button>
+              <br />
+              <a
+                className="btn btn-link"
+                href="/forgetPassword"
+                style={{ color: "beige" }}
+              >
+                Forget Password
+              </a>
+              {/* <button className="btn btn-link">HELLO</button> */}
               <br />
               <a
                 className="btn btn-link"
