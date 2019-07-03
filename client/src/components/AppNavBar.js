@@ -51,6 +51,7 @@ class AppNavBar extends Component {
                   <NavbarBrand href="#">
                     <i className="fa fa-user"> Welcome {user.user.name}</i>
                   </NavbarBrand>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <NavbarBrand href="#" onClick={this.Logout}>
                     <i className="fa fa-sign-out">Logout</i>
                   </NavbarBrand>

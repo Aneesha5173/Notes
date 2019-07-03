@@ -28,6 +28,9 @@ const UserSchema = new Schema({
   isuser: {
     type: Boolean,
     default: false
+  },
+  otp: {
+    type: Number
   }
 });
 

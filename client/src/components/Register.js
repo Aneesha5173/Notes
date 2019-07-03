@@ -99,7 +99,7 @@ class RegisterPage extends Component {
       });
     } else if (!password.match(pattern)) {
       this.setState({
-        msg: "Password length minimum 8",
+        msg: "Password like Xyz@123 & length min 8",
         Auth: false
       });
     } else {
@@ -124,6 +124,10 @@ class RegisterPage extends Component {
           } else if (res.data.msg === "phone already exists") {
             this.setState({
               msg: "Phone already exists"
+            });
+          } else if (res.data.msg === "network failed") {
+            this.setState({
+              msg: "Registeration failed due to Network error"
             });
           } else {
             this.props.history.push("/");

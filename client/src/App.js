@@ -18,6 +18,7 @@ class App extends React.Component {
       //spliting by using "=" operator in URL
       var data = param_array.split("=");
       var token = data[1];
+      console.log(token);
       axios.post(`/validation/${token}`);
     }
   }

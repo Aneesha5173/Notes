@@ -13,6 +13,7 @@ import {
   Alert
 } from "reactstrap";
 import axios from "axios";
+import "./Register.css";
 
 class Notes extends Component {
   state = {
@@ -26,7 +27,7 @@ class Notes extends Component {
     data: [],
     search: "",
     currentPage: 1,
-    notesPerPage: 3
+    notesPerPage: 2
   };
 
   componentWillMount() {
@@ -215,7 +216,9 @@ class Notes extends Component {
             </Button>
           </td>
           <td>{ele.title}</td>
-          <td>{ele.content}</td>
+          <td className="dumy">
+            <div className="scrollable">{ele.content}</div>
+          </td>
           <td>{ele.date}</td>
           <td>{ele.updatedDate}</td>
         </tr>
@@ -227,7 +230,12 @@ class Notes extends Component {
     }
     const renderPageNumber = pageNumber.map(number => {
       return (
-        <li key={number} id={number} onClick={this.pageHandler}>
+        <li
+          key={number}
+          id={number}
+          onClick={this.pageHandler}
+          className="pagenumbers"
+        >
           {number}
         </li>
       );
@@ -304,7 +312,7 @@ class Notes extends Component {
         </Container>
         {this.state.msg ? <Alert color="warning">{this.state.msg}</Alert> : ""}
         {this.state.items.length !== 0 ? (
-          <Table bordered hover striped>
+          <Table bordered>
             <thead>
               <tr>
                 <th />

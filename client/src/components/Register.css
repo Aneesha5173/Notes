@@ -33,3 +33,19 @@
   margin: 4px 2px;
   cursor: pointer;
 }
+
+.pagenumbers:active {
+  border: 1px solid #ccc;
+}
+div.scrollable {
+  width: 687px;
+  height: 100px;
+
+  overflow: auto;
+}
+/* .dumy {
+  width: 687px;
+  height: 100px;
+
+  overflow: auto;
+} */

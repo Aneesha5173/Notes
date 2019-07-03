@@ -53,7 +53,6 @@ class LoginPage extends Component {
 
   render() {
     const data = JSON.parse(localStorage.getItem("user"));
-
     if (!data) {
       return (
         <div className="class1">
